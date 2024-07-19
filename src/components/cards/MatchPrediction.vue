@@ -54,22 +54,54 @@ data() {
             {
                 isPredicted: false,
                 date: '14/07/2024',
-                time: '02:00'
+                time: '02:00',
+                teams:{
+                    firtTeam:{
+                        name: "Việt Nam"
+                    },
+                    secTeam: {
+                        name: "Thái lan"
+                    }
+                }
             },
             {
                 isPredicted: false,
                 date: '15/07/2024',
-                time: '16:00'
+                time: '16:00',
+                match:{
+                    firtTeam:{
+                        name: "Việt Nam"
+                    },
+                    secTeam: {
+                        name: "Thái lan"
+                    }
+                }
             },
             {
                 isPredicted: true,
                 date: '15/07/2024',
-                time: '16:00'
+                time: '16:00',
+                match:{
+                    firtTeam:{
+                        name: "Việt Nam"
+                    },
+                    secTeam: {
+                        name: "Thái lan"
+                    }
+                }
             },
             {
                 isPredicted: true,
                 date: '20/07/2024',
-                time: '16:00'
+                time: '16:00',
+                match:{
+                    firtTeam:{
+                        name: "Việt Nam"
+                    },
+                    secTeam: {
+                        name: "Thái lan"
+                    }
+                }
             }
         ],
         isShowPopup: false,

@@ -6,14 +6,20 @@
         :showFooter="true"
         :title="title"
     >
+    <RewardPrediction/>
+    <RewardHistory/>
     </Popup>
 </template>
 
 <script>
 import Popup from '../Popup.vue'
+import RewardPrediction from '../cards/rewards/RewardPrediction.vue'
+import RewardHistory from '../cards/rewards/RewardHistory.vue'
 export default {
     components: {
         Popup,
+        RewardPrediction,
+        RewardHistory
     },
     props: {
         visible: {

@@ -7,30 +7,31 @@
         :key="index"
         :style="{ top: `${positions[index]}px` }"
         ref="items">
-        <div v-if="!isTask" class="date">Ngày {{ item.date }}</div>
+        <div v-if="!isTask && !isReward" class="date">Ngày {{ item.date }}</div>
         <div class="match">
           <div class="item-detail">
             <img src="@/assets/vs.png" alt="" class="img-black-to-white">
             <div class="left-side">
               <div class="time">
-                <div v-if="!isTask">{{ item.time }}</div>
-                <img v-else src="@/assets/dollar-icon.png" alt="">
+                <img v-if="isReward" src="@/assets/voucher.png" alt="">
+                <img v-else-if="isTask" src="@/assets/dollar-icon.png" alt="">
+                <div v-else>{{ item.time }}</div>
               </div>
               <div class="team-group">
-                <div v-if="!isTask" class="team">
+                <div v-if="!isTask && !isReward" class="team">
                   <img src="../assets/vn.jpg" alt="">
                 </div>
-                <div v-if="!isTask" class="team">
+                <div v-if="!isTask && !isReward" class="team">
                   <img src="../assets/tl.jpg" alt="">
                 </div>
-                <div v-if="isTask" class="task-description">
-                  Mua 1 ly nước bất kì mệnh giá 30k
+                <div v-if="isTask || isReward" class="description">
+                  {{ item.description }}
                 </div>
               </div>
               <div v-if="!item.isExpired && !isHistory" class="promotion">
                 <img src="../assets/promo.png" alt="">
               </div>
-              <div v-else-if="!isTask" class="score">
+              <div v-else-if="!isTask && !isReward" class="score">
                 <div>
                   2
                 </div>
@@ -40,9 +41,9 @@
               </div>
             </div>
             <div class="right-side">
-              <div v-if="isTask" class="task-btn">
+              <div v-if="isTask || isReward" class="task-btn">
                 <div class="num-times">0/5 lần</div>
-                <div class="task-reward">
+                <div class="task-reward" v-if="!isReward">
                   <img src="@/assets/ticket.png" alt="">
                   10 vé
                 </div>
@@ -51,14 +52,14 @@
               <button v-else-if="!item.isExpired && !isHistory" @click="OpenPopup(item)">
                 Dự đoán
               </button>
-              <div v-else @click="OpenPopup(item)">
-                <div class="result" v-if="!isHistory">
+              <div class="result" v-else @click="OpenPopup(item)">
+                <div class="expired" v-if="!isHistory">
                   Không dự đoán
                 </div>
-                <div class="result" v-else>
-                  <div class="reward">
+                <div class="reward" v-else>
+                  <h4>
                     Thưởng: 400
-                  </div>
+                  </h4>
                   <span>Xem chi tiết <i class="fas fa-chevron-right"></i></span>
               </div>
               </div>
@@ -89,6 +90,10 @@
         default: false
       },
       isTask: {
+        type: Boolean,
+        default: false
+      },
+      isReward: {
         type: Boolean,
         default: false
       },
@@ -233,7 +238,7 @@
               border: 1px solid #fff;
             }
           }
-          .task-description {
+          .description {
             word-break: keep-all;
             font-size: 11px;
             margin-right: 4px;
@@ -282,16 +287,23 @@
         .result {
           height: 100%;
           width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           font-size: 11px;
-          .reward {
-            margin-top: 10px;
+          .expired {
             font-weight: 600;
           }
-          span {
-            font-size: 11px;
-            position: absolute;
-            bottom: 2px;
-            right: 12px;
+          .reward {
+            h4 {
+              margin-top: 10px;
+            }
+            span {
+              font-size: 11px;
+              position: absolute;
+              bottom: 2px;
+              right: 12px;
+            }
           }
         }
         .task-btn {

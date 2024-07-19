@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "task_histories",
+  "info": {
+    "singularName": "task-history",
+    "pluralName": "task-histories",
+    "displayName": "Task History",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "task": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::task.task"
+    },
+    "quantity": {
+      "type": "integer"
+    },
+    "isComplete": {
+      "type": "boolean"
+    }
+  }
+}

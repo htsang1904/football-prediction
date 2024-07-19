@@ -28,13 +28,13 @@ data() {
     return {
         ListDailyTask: [
             {
-                time: '02:00'
+                description: "Mua 1 ly nước bất kì mệnh giá 30k"
             },
             {
-                time: '16:00'
+                description: "Mua 1 ly nước bất kì mệnh giá 30k"
             },
             {
-                time: '16:00'
+                description: "Mua 1 ly nước bất kì mệnh giá 30k"
             },
         ],
         selectedMatch: null,

@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "game_users",
+  "info": {
+    "singularName": "game-user",
+    "pluralName": "game-users",
+    "displayName": "Game User"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "phoneNumber": {
+      "type": "string"
+    },
+    "task_histories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::task-history.task-history"
+    }
+  }
+}

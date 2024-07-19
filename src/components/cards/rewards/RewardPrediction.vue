@@ -3,12 +3,12 @@
         <Card :isShowFooter="false">
             <template slot="title">
                 <div class="title-img">
-                    <img src="@/assets/prediction.png" alt="">
+                    <img src="@/assets/reward.png" alt="">
                 </div>
                 <span class="sub-title">Dúng vé đổi thưởng</span>
             </template>
             <template slot="body">
-                <CardItem :isTask="true" :ListItem="ListDailyTask" @showPopup="" :isFullItem="true"/>
+                <CardItem :isReward="true" :ListItem="ListDailyTask" @showPopup="" :isFullItem="true"/>
             </template>
         </Card>
     </div>
@@ -28,13 +28,13 @@ data() {
     return {
         ListDailyTask: [
             {
-                time: '02:00'
+                description: "Mã giảm giá cà phê 10%"
             },
             {
-                time: '16:00'
+                description: "Mã giảm giá cà phê 10%"
             },
             {
-                time: '16:00'
+                description: "Mã giảm giá cà phê 10%"
             },
         ],
         selectedMatch: null,

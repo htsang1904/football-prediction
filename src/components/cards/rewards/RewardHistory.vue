@@ -3,12 +3,12 @@
         <Card :isShowFooter="false">
             <template slot="title">
                 <div class="title-img">
-                    <img src="@/assets/prediction.png" alt="">
+                    <img src="@/assets/reward-his.png" alt="">
                 </div>
-                <span class="sub-title">Dúng vé đổi thưởng</span>
+                <span class="sub-title">Lịch sử đổi thưởng</span>
             </template>
             <template slot="body">
-                <CardItem :isTask="true" :ListItem="ListDailyTask" @showPopup="" :isFullItem="true"/>
+                <CardItem :isReward="true" :ListItem="ListReward" @showPopup="" :isFullItem="true"/>
             </template>
         </Card>
     </div>
@@ -26,15 +26,15 @@ props: {
 },
 data() {
     return {
-        ListDailyTask: [
+        ListReward: [
             {
-                time: '02:00'
+                description: "Mã giảm giá cà phê 10%"
             },
             {
-                time: '16:00'
+                description: "Mã giảm giá cà phê 10%"
             },
             {
-                time: '16:00'
+                description: "Mã giảm giá cà phê 10%"
             },
         ],
         selectedMatch: null,
