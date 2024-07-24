@@ -1,18 +1,18 @@
 <template>
     <div class="match-prediction">
-        <Card :isShowTitle="!isFullMatch" :isShowFooter="!isFullMatch">
+        <Card :isShowTitle="!isFullMatch" :isShowFooter="!isFullMatch" v-loading="loading">
             <template slot="title">
                 <div class="title-img">
-                    <img src="../../assets/ticket.png" alt="">
+                    <img src="../../assets/img/ticket.png" alt="">
                     <span>Vé:</span>
                     <span class="ticket-count">0</span>
                 </div>
                 <span class="sub-title">Dự đoán</span>
             </template>
-            <template slot="body">
+            <template slot="body" v-if="ListMatch.length">
                 <CardItem :ListItem="ListMatch" @showPopup="onOpenPopup" :isFullItem="isFullMatch"/>
             </template>
-            <template slot="footer">
+            <template slot="footer" v-if="ListMatch.length">
                 <button @click="ShowFullMatchPopup">
                     Xem tất cả trận đấu <i class="fas fa-chevron-right"></i>
                 </button>
@@ -50,7 +50,28 @@ props: {
 },
 data() {
     return {
-        ListMatch: [
+        ListMatch: [],
+        isShowPopup: false,
+        selectedMatch: null,
+        isShowFullMatchPopup: false,
+        loading: false,
+    }
+},
+mounted() {
+this.processData()
+},
+methods: {
+    onOpenPopup(e) {
+        this.isShowPopup = true
+        this.selectedMatch = e
+    },
+    ShowFullMatchPopup() {
+        this.isShowFullMatchPopup = true
+    },
+    processData() {
+        this.loading = true
+        setTimeout(() => {
+            this.ListMatch = [
             {
                 isPredicted: false,
                 date: '14/07/2024',
@@ -103,21 +124,10 @@ data() {
                     }
                 }
             }
-        ],
-        isShowPopup: false,
-        selectedMatch: null,
-        isShowFullMatchPopup: false
+        ]
+            this.loading = false
+        }, 3000);
     }
-},
-methods: {
-    onOpenPopup(e) {
-        this.isShowPopup = true
-        this.selectedMatch = e
-    },
-    ShowFullMatchPopup() {
-        this.isShowFullMatchPopup = true
-    }
-    
 }
 }
 </script>

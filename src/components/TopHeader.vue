@@ -1,7 +1,7 @@
 <template>
   <div id="header">
     <div class="logo">
-      <img src="../assets/153618977_logo.png" alt="">
+      <img src="../assets/img/153618977_logo.png" alt="">
     </div>
   </div>
 </template>
@@ -17,7 +17,7 @@ export default {
 #header {
   height: 68px;
   width: 100%;
-  background: url('../assets/bg-header.jpg') no-repeat center/100% 80px;
+  background: url('../assets/img/bg-header.jpg') no-repeat center/100% 80px;
   position: relative;
   box-shadow: inset 0 -12px 10px #152141;
   .logo {

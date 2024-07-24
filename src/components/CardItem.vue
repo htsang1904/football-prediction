@@ -10,26 +10,26 @@
         <div v-if="!isTask && !isReward" class="date">Ngày {{ item.date }}</div>
         <div class="match">
           <div class="item-detail">
-            <img src="@/assets/vs.png" alt="" class="img-black-to-white">
+            <img src="@/assets/img/vs.png" alt="" class="img-black-to-white">
             <div class="left-side">
               <div class="time">
-                <img v-if="isReward" src="@/assets/voucher.png" alt="">
-                <img v-else-if="isTask" src="@/assets/dollar-icon.png" alt="">
+                <img v-if="isReward" src="@/assets/img/voucher.png" alt="">
+                <img v-else-if="isTask" src="@/assets/img/dollar-icon.png" alt="">
                 <div v-else>{{ item.time }}</div>
               </div>
               <div class="team-group">
                 <div v-if="!isTask && !isReward" class="team">
-                  <img src="../assets/vn.jpg" alt="">
+                  <img src="../assets/img/vn.jpg" alt="">
                 </div>
                 <div v-if="!isTask && !isReward" class="team">
-                  <img src="../assets/tl.jpg" alt="">
+                  <img src="../assets/img/tl.jpg" alt="">
                 </div>
                 <div v-if="isTask || isReward" class="description">
                   {{ item.description }}
                 </div>
               </div>
               <div v-if="!item.isExpired && !isHistory" class="promotion">
-                <img src="../assets/promo.png" alt="">
+                <img src="../assets/img/promo.png" alt="">
               </div>
               <div v-else-if="!isTask && !isReward" class="score">
                 <div>
@@ -42,12 +42,12 @@
             </div>
             <div class="right-side">
               <div v-if="isTask || isReward" class="task-btn">
-                <div class="num-times">0/5 lần</div>
+                <div class="num-times">0/{{ item.quantity }} lần</div>
                 <div class="task-reward" v-if="!isReward">
-                  <img src="@/assets/ticket.png" alt="">
-                  10 vé
+                  <img src="@/assets/img/ticket.png" alt="">
+                  {{ item.ticket }} vé
                 </div>
-                <button>Nhận ngay</button>
+                <button @click="getReward(item)">Nhận ngay</button>
               </div>
               <button v-else-if="!item.isExpired && !isHistory" @click="OpenPopup(item)">
                 Dự đoán
@@ -68,8 +68,8 @@
         </div>
         <div v-if="item.isPredicted && !isHistory" class="predict-success">Bạn đã dự đoán Việt Nam thắng - 60 vé</div>
         <div v-if="isHistory" class="result-img">
-          <img v-if="isCorrectPredict" src="../assets/correct.png" alt="">
-          <img v-else src="../assets/correct.png" alt="">
+          <img v-if="isCorrectPredict" src="../assets/img/correct.png" alt="">
+          <img v-else src="../assets/img/correct.png" alt="">
         </div>
       </div>
     </div>
@@ -110,7 +110,7 @@
       return {
         positions: [],
         ListMatch: [],
-        isCorrectPredict: true
+        isCorrectPredict: true,
       }
     },
     computed: {
@@ -125,8 +125,7 @@
           let dateMatch = moment(e.date +" "+ e.time, 'DD/MM/YYYY HH:mm')
           return now.isBefore(dateMatch) ? {...e, isExpired: false}:{...e, isExpired: true}
         });
-        
-        this.ListMatch = this.isFullItem ? updatedItems.slice().reverse() : updatedItems.slice(-3).reverse()
+          this.ListMatch = this.isFullItem ? updatedItems.slice().reverse() : updatedItems.slice(-3).reverse()
       },
       calculatePositions() {
         this.$nextTick(() => {
@@ -139,6 +138,10 @@
           });
           this.$refs.container.style.height = `${top}px`;
         });
+      },
+
+      getReward(item) {
+        this.$emit('getReward', item)
       }
     }
   }

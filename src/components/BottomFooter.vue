@@ -52,7 +52,7 @@
     },
     methods: {
       getImage(img) {
-        return img ? require(`../assets/${img}`) : '';
+        return img ? require(`../assets/img/${img}`) : '';
       },
       handleClick(item) {
         this.selectedTab = this.tabs.indexOf(item)

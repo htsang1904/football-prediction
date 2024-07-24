@@ -3,7 +3,7 @@
         <Card :isShowTitle="!isFullMatch" :isShowFooter="!isFullMatch">
             <template slot="title">
                 <div class="title-img">
-                    <img src="../../assets/prediction.png" alt="">
+                    <img src="../../assets/img/prediction.png" alt="">
                 </div>
                 <span class="sub-title">Dự đoán gần đây</span>
             </template>

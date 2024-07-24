@@ -1,16 +1,20 @@
 <template>
     <div class="daily-task">
-        <Card :isShowFooter="false">
+        <Card :isShowFooter="false"  v-loading="loading">
             <template slot="title">
                 <div class="title-img">
-                    <img src="@/assets/prediction.png" alt="">
+                    <img src="@/assets/img/prediction.png" alt="">
                 </div>
                 <span class="sub-title">Nhiệm vụ hàng tuần</span>
             </template>
-            <template slot="body">
-                <CardItem :isTask="true" :ListItem="ListDailyTask" @showPopup="" :isFullItem="true"/>
+            <template slot="body" v-if="listItem.length">
+                <CardItem :isTask="true" :ListItem="listItem" @showPopup="" :isFullItem="true" @getReward="getReward"/>
             </template>
         </Card>
+        <ErrorPopup
+            v-if="isShowPopup"
+            @closed="isShowPopup = false"
+        />
     </div>
 </template>
 
@@ -23,25 +27,25 @@ components: {
     CardItem,
 },
 props: {
+    listItem: {
+        type: Array,
+        default: () => []
+    },
+    loading: {
+        type: Boolean,
+        default: false
+    }
 },
 data() {
     return {
-        ListDailyTask: [
-            {
-                description: "Mua 1 ly nước bất kì mệnh giá 30k"
-            },
-            {
-                description: "Mua 1 ly nước bất kì mệnh giá 30k"
-            },
-            {
-                description: "Mua 1 ly nước bất kì mệnh giá 30k"
-            },
-        ],
         selectedMatch: null,
+        isShowPopup: false
     }
 },
 methods: {
-    
+    getReward(e) {
+        this.isShowPopup = true
+    }
 }
 }
 </script>

@@ -1,0 +1,8 @@
+.custom-loading {
+  background: url('../assets/img/ball-loading.gif') no-repeat center center;
+  background-size: 30% 66%;
+  border: none;
+}
+svg.circular {
+  display: none;
+}

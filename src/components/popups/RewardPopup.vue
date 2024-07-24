@@ -63,7 +63,7 @@ export default {
 <style lang="scss" scoped>
 .reward-popup {
     ::v-deep .el-dialog {
-           background: url('../../assets/bg-popup1.jpg') no-repeat center / cover;
+           background: url('../../assets/img/bg-popup1.jpg') no-repeat center / cover;
            &::after {
             display: none;
            }

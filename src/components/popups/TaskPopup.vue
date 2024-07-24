@@ -6,8 +6,8 @@
         :showFooter="true"
         :title="title"
     >
-    <DailyTask/>
-    <WeeklyTask/>
+    <DailyTask :listItem="dailyTask" :loading="loading"/>
+    <WeeklyTask :listItem="weeklyTask" :loading="loading"/>
     </Popup>
 </template>
 
@@ -31,12 +31,16 @@ export default {
     data() {
         return {
             isShow: true,
+            dailyTask: [],
+            weeklyTask: [],
+            loading: false
         }
     },
     mounted() {
         if (this.visible) {
             this.showDialog = true;
         }
+        this.getTaskList()
     },
     computed: {
         title() {
@@ -45,6 +49,15 @@ export default {
     },
 
     methods: {
+        async getTaskList() {
+            this.loading = true
+            let taskList = await this.$api.taskApi.getData()
+            setTimeout(() => {
+            this.dailyTask = taskList.data.filter(e => e.type === 'daily')
+            this.weeklyTask = taskList.data.filter(e => e.type === 'weekly')
+            this.loading = false
+            }, 200);
+        },
         onClosed() {
             this.$emit('closed')
         },
@@ -63,7 +76,7 @@ export default {
 <style lang="scss" scoped>
 .task-popup {
         ::v-deep .el-dialog {
-           background: url('../../assets/bg-popup1.jpg') no-repeat center / cover;
+           background: url('../../assets/img/bg-popup1.jpg') no-repeat center / cover;
            &::after {
             display: none;
            }

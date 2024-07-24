@@ -9,7 +9,7 @@
     <div class="content">
         <div class="match-detail">
             <div class="flag">
-                <img src="../../assets/vn.jpg" alt="">
+                <img src="../../assets/img/vn.jpg" alt="">
                 <span>Việt Nam</span>
             </div>
             <div class="time">
@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="flag">
-                <img src="../../assets/tl.jpg" alt="">
+                <img src="../../assets/img/tl.jpg" alt="">
                 <span>Thái Lan</span>
             </div>
         </div>
@@ -31,19 +31,19 @@
             </div>
             <div class="prediction-result">
                 <div class="option" :class="{ active: activeOption === 'firstTeam' }" @click="selectOption('firstTeam')">
-                    <img src="../../assets/vn.jpg" alt="">
+                    <img src="../../assets/img/vn.jpg" alt="">
                     <span>Thắng</span>
                     <span>Thưởng X10</span>
                     <i class="fas fa-caret-up"></i>
                 </div>
                 <div class="option" :class="{ active: activeOption === 'tie' }" @click="selectOption('tie')">
-                    <img src="../../assets/tie.png" alt="" class="tie-game">
+                    <img src="../../assets/img/tie.png" alt="" class="tie-game">
                     <span>Hòa</span>
                     <span>Thưởng X5</span>
                     <i class="fas fa-caret-up"></i>
                 </div>
                 <div class="option" :class="{ active: activeOption === 'secTeam' }" @click="selectOption('secTeam')">
-                    <img src="../../assets/tl.jpg" alt="">
+                    <img src="../../assets/img/tl.jpg" alt="">
                     <span>Thắng</span>
                     <span>Thưởng X10</span>
                     <i class="fas fa-caret-up"></i>

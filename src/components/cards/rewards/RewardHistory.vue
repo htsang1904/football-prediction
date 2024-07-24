@@ -3,7 +3,7 @@
         <Card :isShowFooter="false">
             <template slot="title">
                 <div class="title-img">
-                    <img src="@/assets/reward-his.png" alt="">
+                    <img src="@/assets/img/reward-his.png" alt="">
                 </div>
                 <span class="sub-title">Lịch sử đổi thưởng</span>
             </template>

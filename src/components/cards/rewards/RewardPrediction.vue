@@ -3,7 +3,9 @@
         <Card :isShowFooter="false">
             <template slot="title">
                 <div class="title-img">
-                    <img src="@/assets/reward.png" alt="">
+                    <img src="@/assets/img/reward.png" alt="">
+                    <span>Xu:</span>
+                    <span class="coin-count">100</span>
                 </div>
                 <span class="sub-title">Dúng vé đổi thưởng</span>
             </template>
@@ -58,7 +60,7 @@ methods: {
         position: absolute;
         left: 0;
         height: 40px;
-        width: 50px;
+        width: 56px;
         background: #fff;
         border-radius: 4px;
         display: flex;
@@ -81,13 +83,14 @@ methods: {
         font-size: 12px;
         margin-left: 30px;
         }
-        .ticket-count {
+        .coin-count {
         font-weight: 900;
+        word-break: keep-all;
         }
         img {
         position: absolute;
         height: 90%;
-        left: 50%;
+        left: 4px;
         transform: translateX(-50%);
         -webkit-filter: drop-shadow(0px 4px 4px #222222c4);
         filter: drop-shadow(0px 2px 2px #22222295);

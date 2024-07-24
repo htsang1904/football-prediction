@@ -6,13 +6,12 @@
         <HistoryPrediction/>
       </div>
     <BottomFooter/>
-    <audio ref="audio" :src="audioSource" loop ></audio>
+    <audio ref="backgroundAudio" :src="backgroundAudio" muted loop :autoplay="false"></audio>
   </div>
 </template>
 
 <script>
 import TopHeader from './components/TopHeader.vue'
-import Card from './components/Card.vue'
 import MatchPrediction from './components/cards/MatchPrediction.vue'
 import HistoryPrediction from './components/cards/HistoryPrediction.vue'
 import BottomFooter from './components/BottomFooter.vue'
@@ -24,10 +23,42 @@ export default {
     MatchPrediction,
     HistoryPrediction
   },
+  mounted() {
+    this.$refs.backgroundAudio.volume = 0.5
+    document.addEventListener('touchstart', this.enableAudioPlayback, { once: true });
+  },
+  beforeDestroy() {
+    document.removeEventListener('touchstart', this.playSoundTouch);
+  },
   data() {
     return {
-      audioSource: require('./assets/audio/game-audio.mp3') 
+      backgroundAudio: require('./assets/audio/game-audio.mp3'),
+      touchAudio: new Audio(require('./assets/audio/touch-sound.wav')),
     }
+  },
+  methods: {
+    enableAudioPlayback() {
+      this.touchAudio.muted = true;
+      this.touchAudio.play().then(() => {
+        this.touchAudio.muted = false; // Unmute the audio
+        this.touchAudio.pause(); // Pause after unlocking
+        this.touchAudio.currentTime = 0; // Reset to the beginning
+
+        // Add the touchstart event listener to play sound
+        document.addEventListener('touchstart', this.playSoundTouch);
+
+        // Remove this initial listener as it's no longer needed
+        document.removeEventListener('touchstart', this.enableAudioPlayback);
+      }).catch((error) => {
+        console.error('Error enabling audio playback:', error);
+      });
+    },
+    playSoundTouch() {
+      this.touchAudio.currentTime = 0;
+      this.touchAudio.play().catch((error) => {
+        console.error('Error playing audio:', error);
+      });
+    },
   }
 }
 </script>

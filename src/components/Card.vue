@@ -18,10 +18,8 @@
   </template>
   
   <script>
-  import CardItem from './CardItem.vue'
   export default {
     components: {
-      CardItem
     },
     props: {
       isShowTitle: {
@@ -35,9 +33,6 @@
     },
     data() {
       return {
-        items: [
-          1, 2, 3
-        ]
       }
     },
     methods: {
@@ -50,7 +45,7 @@
     margin-top: 40px;
     min-height: 160px;
     width: 84%;
-    background: url('../assets/grass-bg1.jpg') center / 30%;
+    background: url('../assets/img/grass-bg1.jpg') center / 30%;
     border: 1px solid #fff;
     box-shadow: inset 0 0 20px #ffffff9d;
     border-radius: 4px;

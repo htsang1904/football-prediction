@@ -18,11 +18,15 @@
     "quantity": {
       "type": "integer"
     },
-    "coin": {
+    "ticket": {
       "type": "integer"
     },
     "type": {
-      "type": "string"
+      "type": "enumeration",
+      "enum": [
+        "daily",
+        "weekly"
+      ]
     }
   }
 }
