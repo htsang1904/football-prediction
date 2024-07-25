@@ -5,7 +5,7 @@
                 <div class="title-img">
                     <img src="@/assets/img/reward.png" alt="">
                     <span>Xu:</span>
-                    <span class="coin-count">100</span>
+                    <span class="coin-count">{{ coinCount }}</span>
                 </div>
                 <span class="sub-title">Dúng vé đổi thưởng</span>
             </template>
@@ -40,6 +40,11 @@ data() {
             },
         ],
         selectedMatch: null,
+    }
+},
+computed: {
+    coinCount() {
+        return this.$game.userInfo.total_coins
     }
 },
 methods: {

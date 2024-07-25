@@ -12,8 +12,12 @@
             </template>
         </Card>
         <ErrorPopup
-            v-if="isShowPopup"
-            @closed="isShowPopup = false"
+            v-if="isShowFailurePopup"
+            @closed="isShowFailurePopup = false"
+        />
+        <CongratulationPopup
+            v-if="isShowSuccessPopup"
+            @closed="isShowSuccessPopup = false"
         />
     </div>
 </template>
@@ -39,12 +43,17 @@ props: {
 data() {
     return {
         selectedMatch: null,
-        isShowPopup: false,
+        isShowFailurePopup: false,
+        isShowSuccessPopup: false,
+        isCompleted: true,
     }
 },
 methods: {
     getReward(e) {
-        this.isShowPopup = true
+        if(!this.isCompleted) {
+            this.isShowFailurePopup = true
+        }
+        this.isShowSuccessPopup = true
     }
 }
 }

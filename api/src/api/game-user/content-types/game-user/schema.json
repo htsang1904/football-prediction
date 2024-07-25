@@ -4,7 +4,8 @@
   "info": {
     "singularName": "game-user",
     "pluralName": "game-users",
-    "displayName": "Game User"
+    "displayName": "Game User",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -20,7 +21,17 @@
     "task_histories": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::task-history.task-history"
+      "target": "api::task-history.task-history",
+      "mappedBy": "game_user"
+    },
+    "user_id": {
+      "type": "integer"
+    },
+    "total_tickets": {
+      "type": "integer"
+    },
+    "total_coins": {
+      "type": "integer"
     }
   }
 }

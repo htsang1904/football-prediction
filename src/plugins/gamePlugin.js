@@ -5,9 +5,10 @@ const gamePlugin = new Vue({
     return {
       userInfo: {
         id: null,
+        user_id: null,
         name: null,
-        level: 0,
-        coins: 0,
+        total_coins: 0,
+        total_tickets: 0
       },
     }
   },

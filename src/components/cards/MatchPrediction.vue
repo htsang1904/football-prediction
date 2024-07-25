@@ -5,7 +5,7 @@
                 <div class="title-img">
                     <img src="../../assets/img/ticket.png" alt="">
                     <span>Vé:</span>
-                    <span class="ticket-count">0</span>
+                    <span class="ticket-count">{{ ticketCount }}</span>
                 </div>
                 <span class="sub-title">Dự đoán</span>
             </template>
@@ -55,6 +55,11 @@ data() {
         selectedMatch: null,
         isShowFullMatchPopup: false,
         loading: false,
+    }
+},
+computed: {
+    ticketCount() {
+        return this.$game.userInfo.total_tickets
     }
 },
 mounted() {

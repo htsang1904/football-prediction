@@ -8,10 +8,10 @@
         :isFullScreen="false"
         :isShowLeftBtn="false"
     >
-    <div class="content">Bạn chưa đủ điều kiện để nhận thưởng, hãy hoàn thành nhiệm vụ</div>
+    <div class="content">Bạn chưa đủ điều kiện để nhận thưởng</div>
     <template slot="footer">
         <div class="footer-btn">
-            <button @click="isShow = false">Đến nhiệm vụ</button>
+            <button @click="isShow = false">Xác nhận</button>
         </div>
     </template>
     </Popup>
@@ -44,7 +44,7 @@ export default {
     },
     computed: {
         title() {
-            return 'Thất bại'
+            return 'Chúc mừng'
         }
     },
 
@@ -78,15 +78,16 @@ export default {
            .el-dialog__header{
             width: 80%;
             .el-dialog__title {
-                background-color: #DD0000;
+                background-color: #58c00b;
                 position: absolute;
                 top: -16px;
                 left: 50%;
                 transform: translateX(-50%);
                 padding: 4px 30px;
                 border-radius: 14px;
-                border-bottom: 4px solid #BB0000;
+                border-bottom: 4px solid #237e08;
                 filter: drop-shadow(0px 3px 0px #ffffff) drop-shadow(3px 0px 0px #ffffff) drop-shadow(-3px 0px 0px #ffffff) drop-shadow(0px -3px 0px #ffffff);
+                white-space: nowrap;
             }
            }
            .el-dialog__body {

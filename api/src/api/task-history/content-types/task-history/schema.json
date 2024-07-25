@@ -17,11 +17,14 @@
       "relation": "oneToOne",
       "target": "api::task.task"
     },
-    "quantity": {
-      "type": "integer"
-    },
-    "isComplete": {
+    "isCompleted": {
       "type": "boolean"
+    },
+    "game_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::game-user.game-user",
+      "inversedBy": "task_histories"
     }
   }
 }
