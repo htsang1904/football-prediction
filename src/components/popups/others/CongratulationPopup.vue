@@ -8,7 +8,7 @@
         :isFullScreen="false"
         :isShowLeftBtn="false"
     >
-    <div class="content">Bạn chưa đủ điều kiện để nhận thưởng</div>
+    <div class="content">{{ message }}</div>
     <template slot="footer">
         <div class="footer-btn">
             <button @click="isShow = false">Xác nhận</button>
@@ -28,6 +28,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        message: {
+            type: String,
+            default: ''
+        }
     },
 
     data() {

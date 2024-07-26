@@ -10,5 +10,8 @@ export const taskHisApi = {
     },
     getTaskLog(data) {
         return client.post(`/task-history/get-his`, data)
+    },
+    getReward(data) {
+        return client.post(`/task-history/get-reward`, data)
     }
 };

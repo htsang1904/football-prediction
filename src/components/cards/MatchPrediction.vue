@@ -131,7 +131,7 @@ methods: {
             }
         ]
             this.loading = false
-        }, 3000);
+        }, 200);
     }
 }
 }

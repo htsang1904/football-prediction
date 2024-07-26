@@ -6,8 +6,8 @@
         :showFooter="true"
         :title="title"
     >
-    <DailyTask :listItem="dailyTask" :loading="loading"/>
-    <WeeklyTask :listItem="weeklyTask" :loading="loading"/>
+    <DailyTask :listItem="currDailyTask" :loading="loading"/>
+    <WeeklyTask :listItem="currWeeklyTask" :loading="loading"/>
     </Popup>
 </template>
 
@@ -31,8 +31,8 @@ export default {
     data() {
         return {
             isShow: true,
-            dailyTask: [],
-            weeklyTask: [],
+            currDailyTask: [],
+            currWeeklyTask: [],
             loading: false
         }
     },
@@ -52,9 +52,20 @@ export default {
         async getTaskList() {
             this.loading = true
             let taskList = await this.$api.taskApi.getData()
+            let hisTaskList = await this.$api.taskHisApi.getTaskLog({
+                user_id: this.$game.userInfo.id
+            })
             setTimeout(() => {
-            this.dailyTask = taskList.data.filter(e => e.type === 'daily')
-            this.weeklyTask = taskList.data.filter(e => e.type === 'weekly')
+            let dailyTask = taskList.data.filter(e => e.type === 'daily')
+            this.currDailyTask = dailyTask.map(e => {
+               let count = hisTaskList.data.dailyTask.filter(x => x.task.id == e.id).length
+               return {...e, count: count}
+            })
+            let weeklyTask = taskList.data.filter(e => e.type === 'weekly')
+            this.currWeeklyTask = weeklyTask.map(e => {
+               let count = hisTaskList.data.weeklyTask.filter(x => x.task.id == e.id).length
+               return {...e, count: count}
+            })
             this.loading = false
             }, 200);
         },

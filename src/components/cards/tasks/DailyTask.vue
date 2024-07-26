@@ -13,10 +13,12 @@
         </Card>
         <ErrorPopup
             v-if="isShowFailurePopup"
+            :message="message"
             @closed="isShowFailurePopup = false"
         />
         <CongratulationPopup
             v-if="isShowSuccessPopup"
+            :message="message"
             @closed="isShowSuccessPopup = false"
         />
     </div>
@@ -46,14 +48,33 @@ data() {
         isShowFailurePopup: false,
         isShowSuccessPopup: false,
         isCompleted: true,
+        message: ''
     }
 },
 methods: {
-    getReward(e) {
-        if(!this.isCompleted) {
+    async getReward(e) {
+        if(e.count <= 0) {
+            this.message = "Rất tiếc, bạn chưa đủ điều kiện để nhận thưởng."
+            this.isShowFailurePopup = true
+            return
+        }
+        let data = {
+            task_id: e.id,
+            user_id: this.$game.userInfo.id
+        }
+        let getReward = await this.$api.taskHisApi.getReward(data)
+        if(e.count < e.quantity && !getReward.data.success) {
+            this.message = "Rất tiếc, bạn chưa đủ điều kiện để nhận thưởng."
             this.isShowFailurePopup = true
         }
-        this.isShowSuccessPopup = true
+        if(e.count == e.quantity && !getReward.data.success) {
+            this.message = "Hôm nay bạn đã hoàn thành nhiệm vụ này"
+            this.isShowFailurePopup = true
+        }
+        if(getReward.data.success) {
+            this.message = `Chúc mừng bạn đã hoàn thành nhiệm vụ. Nhận ${getReward.data.count*e.ticket} vé dự đoán`
+            this.isShowSuccessPopup = true
+        }
     }
 }
 }

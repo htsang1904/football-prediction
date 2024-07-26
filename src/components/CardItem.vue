@@ -42,7 +42,7 @@
             </div>
             <div class="right-side">
               <div v-if="isTask || isReward" class="task-btn">
-                <div class="num-times">0/{{ item.quantity }} lần</div>
+                <div class="num-times"> {{ item.count }} / {{ item.quantity }} lần</div>
                 <div class="task-reward" v-if="!isReward">
                   <img src="@/assets/img/ticket.png" alt="">
                   {{ item.ticket }} vé

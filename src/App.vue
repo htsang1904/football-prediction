@@ -103,7 +103,6 @@ export default {
           user_name: this.userName,
       }
       let registerResult = await this.$api.userApi.register(registerData)
-      console.log(registerResult.data.data)
       if (registerResult && registerResult.data.success) {
         this.$game.userInfo = {
           id: registerResult.data.data.id,
