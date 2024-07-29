@@ -58,7 +58,7 @@ module.exports = createCoreController('api::task-history.task-history', ({strapi
             success: false
         }
     },
-    async getReward(ctx) {
+    async getTicket(ctx) {
         const data = ctx.request.body
         let count = 0
         let listTaskHis = []
@@ -88,7 +88,6 @@ module.exports = createCoreController('api::task-history.task-history', ({strapi
                     success: false
                 }
             }
-            
         }
         return {
             success: false

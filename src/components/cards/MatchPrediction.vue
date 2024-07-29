@@ -10,7 +10,7 @@
                 <span class="sub-title">Dự đoán</span>
             </template>
             <template slot="body" v-if="ListMatch.length">
-                <CardItem :ListItem="ListMatch" @showPopup="onOpenPopup" :isFullItem="isFullMatch"/>
+                <CardItem :listItem="ListMatch" @showPopup="onOpenPopup" :isFullItem="isFullMatch"/>
             </template>
             <template slot="footer" v-if="ListMatch.length">
                 <button @click="ShowFullMatchPopup">

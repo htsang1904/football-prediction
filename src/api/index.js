@@ -1,4 +1,6 @@
 export * from './task'
 export * from './user'
 export * from './task-his'
+export * from './reward'
+export * from './reward-his'
 export {ApiClient} from '../services/client'

@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reward_histories",
+  "info": {
+    "singularName": "reward-history",
+    "pluralName": "reward-histories",
+    "displayName": "Reward History",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "reward": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::reward.reward"
+    },
+    "received_time": {
+      "type": "string"
+    },
+    "game_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::game-user.game-user",
+      "inversedBy": "reward_histories"
+    }
+  }
+}

@@ -1,9 +1,9 @@
 <template>
     <div class="container" ref="container">
       <div
-       v-if="ListMatch.length"
+        v-if="listMatch.length"
         class="card-item"
-        v-for="(item, index) in ListMatch"
+        v-for="(item, index) in listMatch"
         :key="index"
         :style="{ top: `${positions[index]}px` }"
         ref="items">
@@ -25,7 +25,7 @@
                   <img src="../assets/img/tl.jpg" alt="">
                 </div>
                 <div v-if="isTask || isReward" class="description">
-                  {{ item.description }}
+                  {{ item.description || item.reward.description }}
                 </div>
               </div>
               <div v-if="!item.isExpired && !isHistory" class="promotion">
@@ -41,13 +41,18 @@
               </div>
             </div>
             <div class="right-side">
-              <div v-if="isTask || isReward" class="task-btn">
-                <div class="num-times"> {{ item.count }} / {{ item.quantity }} lần</div>
+              <div v-if="isTask || isReward" class="task-btn" :style="{'justify-content': isReward? 'center':'end' }">
+                <div class="num-times" v-if="!isReward"> {{ item.count }} / {{ item.quantity }} lần</div>
                 <div class="task-reward" v-if="!isReward">
                   <img src="@/assets/img/ticket.png" alt="">
                   {{ item.ticket }} vé
                 </div>
-                <button @click="getReward(item)">Nhận ngay</button>
+                <div class="task-reward" v-if="isReward && !isHistory">
+                  <img src="@/assets/img/coins.png" alt="">
+                  {{ item.coins }} xu
+                </div>
+                <div class="received-time" v-if="isReward && isHistory">{{ item.received_time }}</div>
+                <button @click="getReward(item)" :disabled="isHistory">{{ rewardBtnName }}</button>
               </div>
               <button v-else-if="!item.isExpired && !isHistory" @click="OpenPopup(item)">
                 Dự đoán
@@ -67,7 +72,7 @@
           </div>
         </div>
         <div v-if="item.isPredicted && !isHistory" class="predict-success">Bạn đã dự đoán Việt Nam thắng - 60 vé</div>
-        <div v-if="isHistory" class="result-img">
+        <div v-if="isHistory && !isReward && !isTask" class="result-img">
           <img v-if="isCorrectPredict" src="../assets/img/correct.png" alt="">
           <img v-else src="../assets/img/correct.png" alt="">
         </div>
@@ -79,7 +84,7 @@
   import moment from 'moment'
   export default {
     props: {
-      ListItem: {
+      listItem: {
         type: Array,
         default: () => {
             return []
@@ -109,11 +114,14 @@
     data() {
       return {
         positions: [],
-        ListMatch: [],
+        listMatch: [],
         isCorrectPredict: true,
       }
     },
     computed: {
+      rewardBtnName() {
+        return this.isHistory ? 'Xem chi tiết' : 'Nhận ngay'
+      }
     },
     methods: {
       OpenPopup(item) {
@@ -121,11 +129,12 @@
       },
       processData() {
         let now = moment(new Date(), 'DD/MM/YYYY HH:mm')
-        const updatedItems = this.ListItem.map(e => {
+        const updatedItems = this.listItem.map(e => {
           let dateMatch = moment(e.date +" "+ e.time, 'DD/MM/YYYY HH:mm')
           return now.isBefore(dateMatch) ? {...e, isExpired: false}:{...e, isExpired: true}
         });
-          this.ListMatch = this.isFullItem ? updatedItems.slice().reverse() : updatedItems.slice(-3).reverse()
+          this.listMatch = this.isFullItem ? updatedItems.slice().reverse() : updatedItems.slice(-3).reverse()
+          console.log(this.listMatch)
       },
       calculatePositions() {
         this.$nextTick(() => {
@@ -314,7 +323,6 @@
           width: 100%;
           display: flex;
           flex-direction: column;
-          justify-content: end;
           align-items: center;
           position: relative;
           button {
@@ -328,10 +336,14 @@
             font-weight: 600;
             display: flex;
             align-items: center;
+            margin-bottom: 2px;
             img {
               width: 18px;
               margin-right: 4px;
             }
+          }
+          .received-time{
+            font-size: 11px;
           }
           .num-times {
             position: absolute;

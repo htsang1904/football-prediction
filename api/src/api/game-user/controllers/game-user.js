@@ -40,4 +40,22 @@ module.exports = createCoreController('api::game-user.game-user', ({strapi}) => 
             };
         }
     },
+    async updateTickets(ctx) {
+        let data = ctx.request.body
+        let update = await strapi.entityService.update('api::game-user.game-user', data.user_id, {
+            data: {
+                total_tickets: data.total_tickets
+            },
+        })
+        return update
+    },
+    async updateCoins(ctx) {
+        let data = ctx.request.body
+        let update = await strapi.entityService.update('api::game-user.game-user', data.user_id, {
+            data: {
+                total_coins: data.total_coins
+            }
+        })
+        return update
+    }
 }));

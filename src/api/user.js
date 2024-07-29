@@ -10,5 +10,11 @@ export const userApi = {
     },
     register(data) {
         return client.post(`/game-user/register`, data)
-    }
+    },
+    updateTickets(data) {
+        return client.post(`/game-user/update-tickets`, data)
+    },
+    updateCoins(data) {
+        return client.post(`/game-user/update-coins`, data)
+    },
 };

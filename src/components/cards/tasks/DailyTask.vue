@@ -8,17 +8,19 @@
                 <span class="sub-title">Nhiệm vụ hàng ngày</span>
             </template>
             <template slot="body">
-                <CardItem v-if="listItem.length" :isTask="true" :ListItem="listItem" @showPopup="" :isFullItem="true" @getReward="getReward"/>
+                <CardItem v-if="listItem.length" :isTask="true" :listItem="listItem" @showPopup="" :isFullItem="true" @getReward="getReward"/>
             </template>
         </Card>
         <ErrorPopup
             v-if="isShowFailurePopup"
             :message="message"
+            btnName="Đến nhiệm vụ"
             @closed="isShowFailurePopup = false"
         />
         <CongratulationPopup
             v-if="isShowSuccessPopup"
             :message="message"
+            btnName="Xác nhận"
             @closed="isShowSuccessPopup = false"
         />
     </div>
@@ -62,17 +64,22 @@ methods: {
             task_id: e.id,
             user_id: this.$game.userInfo.id
         }
-        let getReward = await this.$api.taskHisApi.getReward(data)
-        if(e.count < e.quantity && !getReward.data.success) {
+        let getTicket = await this.$api.taskHisApi.getTicket(data)
+        if(e.count < e.quantity && !getTicket.data.success) {
             this.message = "Rất tiếc, bạn chưa đủ điều kiện để nhận thưởng."
             this.isShowFailurePopup = true
         }
-        if(e.count == e.quantity && !getReward.data.success) {
+        if(e.count == e.quantity && !getTicket.data.success) {
             this.message = "Hôm nay bạn đã hoàn thành nhiệm vụ này"
             this.isShowFailurePopup = true
         }
-        if(getReward.data.success) {
-            this.message = `Chúc mừng bạn đã hoàn thành nhiệm vụ. Nhận ${getReward.data.count*e.ticket} vé dự đoán`
+        if(getTicket.data.success) {
+            this.message = `Chúc mừng bạn đã hoàn thành nhiệm vụ. Nhận ${getTicket.data.count*e.ticket} vé dự đoán`
+            this.$game.userInfo.total_tickets+=getTicket.data.count*e.ticket
+            await this.$api.userApi.updateTickets({
+                user_id: this.$game.userInfo.id, 
+                total_tickets:this.$game.userInfo.total_tickets
+            })
             this.isShowSuccessPopup = true
         }
     }

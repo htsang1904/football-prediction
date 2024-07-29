@@ -8,7 +8,7 @@
                 <span class="sub-title">Dự đoán gần đây</span>
             </template>
             <template slot="body">
-                <CardItem :ListItem="ListMatch" @showPopup="onOpenPopup" :isHistory="true" :isFullItem="isFullMatch"/>
+                <CardItem :listItem="ListMatch" @showPopup="onOpenPopup" :isHistory="true" :isFullItem="isFullMatch"/>
             </template>
             <template slot="footer">
                 <button @click="ShowFullHistoryPopup">

@@ -8,12 +8,18 @@
                 <span class="sub-title">Nhiệm vụ hàng tuần</span>
             </template>
             <template slot="body" v-if="listItem.length">
-                <CardItem :isTask="true" :ListItem="listItem" @showPopup="" :isFullItem="true" @getReward="getReward"/>
+                <CardItem :isTask="true" :listItem="listItem" @showPopup="" :isFullItem="true" @getReward="getReward"/>
             </template>
         </Card>
         <ErrorPopup
-            v-if="isShowPopup"
-            @closed="isShowPopup = false"
+            v-if="isShowFailurePopup"
+            :message="message"
+            @closed="isShowFailurePopup = false"
+        />
+        <CongratulationPopup
+            v-if="isShowSuccessPopup"
+            :message="message"
+            @closed="isShowSuccessPopup = false"
         />
     </div>
 </template>
@@ -39,12 +45,41 @@ props: {
 data() {
     return {
         selectedMatch: null,
-        isShowPopup: false
+        isShowFailurePopup: false,
+        isShowSuccessPopup: false,
+        message: '',
     }
 },
 methods: {
-    getReward(e) {
-        this.isShowPopup = true
+    async getReward(e) {
+        if(e.count <= 0) {
+            this.message = "Rất tiếc, bạn chưa đủ điều kiện để nhận thưởng."
+            this.isShowFailurePopup = true
+            return
+        }
+        let data = {
+            task_id: e.id,
+            user_id: this.$game.userInfo.id
+        }
+        let getTicket = await this.$api.taskHisApi.getTicket(data)
+        if(e.count < e.quantity && !getReward.data.success) {
+            this.message = "Rất tiếc, bạn chưa đủ điều kiện để nhận thưởng."
+            this.isShowFailurePopup = true
+        }
+        if(e.count == e.quantity && !getTicket.data.success) {
+            this.message = "Hôm nay bạn đã hoàn thành nhiệm vụ này"
+            this.isShowFailurePopup = true
+        }
+        if(getTicket.data.success) {
+            this.message = `Chúc mừng bạn đã hoàn thành nhiệm vụ. Nhận ${getTicket.data.count*e.ticket} vé dự đoán`
+            this.$game.userInfo.total_tickets+=getTicket.data.count*e.ticket
+            await this.$api.userApi.updateTickets({
+                user_id: this.$game.userInfo.id, 
+                total_tickets:this.$game.userInfo.total_tickets
+            })
+            this.isShowSuccessPopup = true
+        }
+        console.log(this.$game.userInfo.total_tickets)
     }
 }
 }

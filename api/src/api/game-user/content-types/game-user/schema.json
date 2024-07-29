@@ -32,6 +32,12 @@
     },
     "total_coins": {
       "type": "integer"
+    },
+    "reward_histories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::reward-history.reward-history",
+      "mappedBy": "game_user"
     }
   }
 }

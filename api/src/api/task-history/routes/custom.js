@@ -13,8 +13,8 @@ module.exports = {
         },
         {
             method: 'POST',
-            path: '/task-history/get-reward',
-            handler: 'task-history.getReward'
+            path: '/task-history/get-ticket',
+            handler: 'task-history.getTicket'
         }
     ]
 }

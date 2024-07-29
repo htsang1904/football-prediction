@@ -1,6 +1,6 @@
 <template>
     <div class="daily-task">
-        <Card :isShowFooter="false">
+        <Card :isShowFooter="false" v-loading="loading">
             <template slot="title">
                 <div class="title-img">
                     <img src="@/assets/img/reward.png" alt="">
@@ -10,9 +10,21 @@
                 <span class="sub-title">Dúng vé đổi thưởng</span>
             </template>
             <template slot="body">
-                <CardItem :isReward="true" :ListItem="ListDailyTask" @showPopup="" :isFullItem="true"/>
+                <CardItem v-if="listReward.length" :isReward="true" :listItem="listReward" :isFullItem="true" @getReward="getReward"/>
             </template>
         </Card>
+        <ErrorPopup
+            v-if="isShowFailurePopup"
+            :message="message"
+            btnName="Đi dự đoán"
+            @closed="isShowFailurePopup = false"
+        />
+        <CongratulationPopup
+            v-if="isShowSuccessPopup"
+            :message="message"
+            btnName="Xác nhận"
+            @closed="isShowSuccessPopup = false"
+        />
     </div>
 </template>
 
@@ -20,36 +32,57 @@
 import Card from '../../Card.vue'
 import CardItem from '../../CardItem.vue'
 export default {
-components: {
-    Card,
-    CardItem,
-},
-props: {
-},
-data() {
-    return {
-        ListDailyTask: [
-            {
-                description: "Mã giảm giá cà phê 10%"
-            },
-            {
-                description: "Mã giảm giá cà phê 10%"
-            },
-            {
-                description: "Mã giảm giá cà phê 10%"
-            },
-        ],
-        selectedMatch: null,
+    components: {
+        Card,
+        CardItem,
+    },
+    props: {
+    },
+    data() {
+        return {
+            listReward: [],
+            selectedMatch: null,
+            loading: false,
+            isShowFailurePopup: false,
+            isShowSuccessPopup: false,
+            message: ''
+        }
+    },
+    computed: {
+        coinCount() {
+            return this.$game.userInfo.total_coins
+        }
+    },
+    mounted() {
+        this.getRewardList()
+    },
+    methods: {
+        async getRewardList() {
+            this.loading = true
+            let res = await this.$api.rewardApi.getData()
+            setTimeout(() => {
+            this.listReward = res.data
+            this.loading = false
+            }, 200);
+        },
+        async getReward(e) {
+            if(this.$game.userInfo.total_coins < e.coins) {
+                this.message = "Xu hiện tại của bạn không đủ để đổi thưởng. Hãy dự đoán để kiếm thêm xu thưởng."
+                this.isShowFailurePopup = true
+                return
+            }
+            let receivedReward = await this.$api.rewardHisApi.createLog({
+                reward_id: e.id,
+                user_id: this.$game.userInfo.id
+            }).then(res => {
+                this.message = `Chúc mừng bạn đã nhận được"${e.description}"`
+                this.isShowSuccessPopup = true
+                this.$root.$emit('reload-reward-hisory')
+            }).catch(err => {
+                console.log(err)
+            })
+        }
     }
-},
-computed: {
-    coinCount() {
-        return this.$game.userInfo.total_coins
-    }
-},
-methods: {
-    
-}
 }
 </script>
   

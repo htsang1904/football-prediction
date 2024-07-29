@@ -1,6 +1,6 @@
 <template>
     <div class="daily-task">
-        <Card :isShowFooter="false">
+        <Card :isShowFooter="false" v-loading="loading">
             <template slot="title">
                 <div class="title-img">
                     <img src="@/assets/img/reward-his.png" alt="">
@@ -8,7 +8,7 @@
                 <span class="sub-title">Lịch sử đổi thưởng</span>
             </template>
             <template slot="body">
-                <CardItem :isReward="true" :ListItem="ListReward" @showPopup="" :isFullItem="true"/>
+                <CardItem v-if="listReward.length" :isHistory="true" :isReward="true" :listItem="listReward" @showPopup="" :isFullItem="true"/>
             </template>
         </Card>
     </div>
@@ -26,22 +26,33 @@ props: {
 },
 data() {
     return {
-        ListReward: [
-            {
-                description: "Mã giảm giá cà phê 10%"
-            },
-            {
-                description: "Mã giảm giá cà phê 10%"
-            },
-            {
-                description: "Mã giảm giá cà phê 10%"
-            },
-        ],
+        listReward: [],
         selectedMatch: null,
+        loading: false
     }
 },
+created() {
+    this.$root.$on('reload-reward-hisory',this.getRewardHis)
+},
+mounted() {
+    this.getRewardHis()
+},
+beforeDestroy() {
+  this.$root.$off('reload-reward-hisory', this.getRewardHis);
+},
 methods: {
-    
+    async getRewardHis() {
+        this.loading = true
+        this.listReward = []
+        let data = {
+            user_id: this.$game.userInfo.id
+        }
+        let res = await this.$api.rewardHisApi.getRewardLog(data)
+        setTimeout(() => {
+            this.listReward = res.data
+            this.loading = false
+        }, 200);
+    }
 }
 }
 </script>

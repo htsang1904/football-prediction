@@ -11,7 +11,7 @@
     <div class="content">{{ message }}</div>
     <template slot="footer">
         <div class="footer-btn">
-            <button @click="isShow = false">Đến nhiệm vụ</button>
+            <button @click="isShow = false">{{ btnName }}</button>
         </div>
     </template>
     </Popup>
@@ -31,7 +31,11 @@ export default {
         message: {
             type: String,
             default: ''
-        }
+        },
+        btnName: {
+            type: String,
+            default: ''
+        },
     },
 
     data() {

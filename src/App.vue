@@ -94,7 +94,9 @@ export default {
         task_id: 4,
         user_id: this.$game.userInfo.id
       })
-      this.isLoading = false
+      setTimeout(() => {
+        this.isLoading = false
+      }, 400);
     },
     async registerNewUser() {
       let registerData  = {
